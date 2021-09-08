@@ -1,6 +1,7 @@
 import sys
 from tkinter import *
-from tkinter import ttk 
+from tkinter import ttk
+from PyQt5.QtCore import center 
 from PyQt5.QtWidgets import *
 from tkinter import messagebox, filedialog
 from Lectura_Archivo import CargaArchivo
@@ -15,30 +16,48 @@ class Interfaz(QMainWindow):
         raiz.title('Ventana')
         #raiz.resizable(100,500)
         #raiz.geometry("700x500")
-        raiz.config(bg="blue")
+        raiz.config(bg="#5F9EA0")
         self.miMarco = Frame()
         self.miMarco.pack()
-        self.miMarco.config(bg="red")
+        self.miMarco.config(bg="#F5F5F5")
         self.miMarco.config(width="700", height="500")
-
+        self.opciones = ['Archivo Maquina', 'Archivo Simulacion']
         
         self.creacionWidgets()
         self.crearTabla()
         raiz.mainloop()
+
+    def opcionSeleccionada(self, *args):
+        
+
+        if self.opcion_seleccionada.get() == "Archivo Maquina":
+            archivo_maquina = filedialog.askopenfile(title="Cargar Archivo Maquina")
     
-    def cargarArchivo(self):
+            carga1 = CargaArchivo()
+            carga1.configurarMaquina(archivo_maquina, "2", "Producto2")
 
-        archivo = filedialog.askopenfile(title="Cargar Archivo")
+            messagebox.showinfo("Message", "SE CARGO EL ARCHIVO MAQUINA")
+        else:
+            archivo_simulacion = filedialog.askopenfile(title="Cargar Archivo Simulacion")
+        
+            carga2 = CargaArchivo()
+            carga2.cargaSimulacion(archivo_simulacion)
 
-        CargaArchivo().configurarMaquina(archivo, "1")
-
-        messagebox.showinfo("Message", "SE CARGO EL ARCHIVO")
+            messagebox.showinfo("Message", "SE CARGO EL ARCHIVO SIMULACION")
 
     def creacionWidgets(self):
         
-        Boton_Archivo = Button(self.miMarco, text='Archivo', command = self.cargarArchivo, font=("Comic Sans MS", 14), width=10, height=1, bd=3)
-        Boton_Archivo.grid(row=0, column=0, padx=10, pady=10)
+        #Boton_Archivo = Button(self.miMarco, text='Archivo', command = self.cargarArchivo, font=("Comic Sans MS", 14), width=10, height=1, bd=3)
+        #Boton_Archivo.grid(row=0, column=0, padx=10, pady=10)
 
+        self.opcion_seleccionada = StringVar()
+        self.opcion_seleccionada.set('Archivo')
+
+        menu = OptionMenu(self.miMarco, self.opcion_seleccionada, *self.opciones, command=self.opcionSeleccionada  )
+        menu.grid(row=0, column=0, padx=10, pady=10)
+        menu.config(width =15,  font=("Comic Sans MS", 12), bg="#7FFFD4", bd=3)
+
+        
 
         Boton_Reportes = Button(self.miMarco, text='Reportes', font=("Comic Sans MS", 14), width=10, height=1, bd=3)
         Boton_Reportes.grid(row=0, column=1, padx=10, pady=10)
@@ -46,7 +65,7 @@ class Interfaz(QMainWindow):
         Boton_Ayuda = Button(self.miMarco, text='Ayuda', font=("Comic Sans MS", 14), width=10, height=1, bd=3)
         Boton_Ayuda.grid(row=0, column=2, padx=10, pady=10)
 
-        Label_nombreProducto = Label(self.miMarco, text="Nombre Producto", font=("Comic Sans MS", 14), width= 15, height=1, bd=3)
+        Label_nombreProducto = Label(self.miMarco, text="Nombre Producto", font=("Comic Sans MS", 14), width= 15, height=1, bg="#87CEEB")
         Label_nombreProducto.grid(row=1, column=1, padx=10, pady=10)
 
     def crearTabla(self):
