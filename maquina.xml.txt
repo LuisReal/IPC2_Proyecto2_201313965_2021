@@ -1,5 +1,5 @@
 <Maquina>
-	<CantidadLineasProduccion>2</CantidadLineasProduccion>
+	<CantidadLineasProduccion>3</CantidadLineasProduccion>
 	<ListadoLineasProduccion>
 		<LineaProduccion>
 			<Numero>1</Numero>
@@ -11,16 +11,21 @@
 			<CantidadComponentes>5</CantidadComponentes>
 			<TiempoEnsamblaje>15</TiempoEnsamblaje>
 		</LineaProduccion>
+		<LineaProduccion>
+			<Numero>3</Numero>
+			<CantidadComponentes>2</CantidadComponentes>
+			<TiempoEnsamblaje>3</TiempoEnsamblaje>
+		</LineaProduccion>
 	</ListadoLineasProduccion>
 	
 	<ListadoProductos>
 		<Producto>
 			<nombre>Producto1</nombre>
-			<elaboracion>L1pC1p L2pC2p L3pC3p</elaboracion>
+			<elaboracion>L1C1 L2C2 L3C3</elaboracion>
 		</Producto>
 		<Producto>
 			<nombre>Producto2</nombre>
-			<elaboracion>L1pC1p L2pC2p L3pC3p</elaboracion>
+			<elaboracion>L1C1 L2C2 L3C3</elaboracion>
 		</Producto>
 	</ListadoProductos>
 </Maquina>

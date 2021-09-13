@@ -8,8 +8,6 @@ from Lectura_Archivo import CargaArchivo
 
 class Interfaz(QMainWindow):
 
-    
-
     def __init__(self):
         
         raiz = Tk()
@@ -31,13 +29,25 @@ class Interfaz(QMainWindow):
         
 
         if self.opcion_seleccionada.get() == "Archivo Maquina":
-            archivo_maquina = filedialog.askopenfile(title="Cargar Archivo Maquina")
+            
+            archivo_maquina = filedialog.askopenfile(title="Cargar Archivo Maquina") # se obtiene la ruta
     
             carga1 = CargaArchivo()
             carga1.configurarMaquina(archivo_maquina, "2", "Producto2")
 
             messagebox.showinfo("Message", "SE CARGO EL ARCHIVO MAQUINA")
-        else:
+
+            
+            Productos = carga1.menuProductos
+
+            self.producto_seleccionado = StringVar()
+            self.producto_seleccionado.set('Nombre Producto')
+            menuProducto = OptionMenu(self.miMarco, self.producto_seleccionado, *Productos, command=self.productoSeleccionado  )
+            menuProducto.grid(row=1, column=1, padx=10, pady=10)
+            menuProducto.config(width =15,  font=("Comic Sans MS", 12), bg="#7FFFD4", bd=3)  
+            
+        elif self.opcion_seleccionada.get() == "Archivo Simulacion":
+            
             archivo_simulacion = filedialog.askopenfile(title="Cargar Archivo Simulacion")
         
             carga2 = CargaArchivo()
@@ -45,19 +55,19 @@ class Interfaz(QMainWindow):
 
             messagebox.showinfo("Message", "SE CARGO EL ARCHIVO SIMULACION")
 
+    def productoSeleccionado(self, *args):
+        print("Producto seleccionado: ", self.producto_seleccionado.get())
+
+
     def creacionWidgets(self):
         
-        #Boton_Archivo = Button(self.miMarco, text='Archivo', command = self.cargarArchivo, font=("Comic Sans MS", 14), width=10, height=1, bd=3)
-        #Boton_Archivo.grid(row=0, column=0, padx=10, pady=10)
 
         self.opcion_seleccionada = StringVar()
         self.opcion_seleccionada.set('Archivo')
 
         menu = OptionMenu(self.miMarco, self.opcion_seleccionada, *self.opciones, command=self.opcionSeleccionada  )
-        menu.grid(row=0, column=0, padx=10, pady=10)
-        menu.config(width =15,  font=("Comic Sans MS", 12), bg="#7FFFD4", bd=3)
-
-        
+        menu.grid(row=0, column=0, padx=2, pady=2, sticky=W)
+        menu.config(width =15,  font=("Comic Sans MS", 14), bg="#7FFFD4", bd=3, fg='#34495E')      
 
         Boton_Reportes = Button(self.miMarco, text='Reportes', font=("Comic Sans MS", 14), width=10, height=1, bd=3)
         Boton_Reportes.grid(row=0, column=1, padx=10, pady=10)
@@ -65,8 +75,11 @@ class Interfaz(QMainWindow):
         Boton_Ayuda = Button(self.miMarco, text='Ayuda', font=("Comic Sans MS", 14), width=10, height=1, bd=3)
         Boton_Ayuda.grid(row=0, column=2, padx=10, pady=10)
 
-        Label_nombreProducto = Label(self.miMarco, text="Nombre Producto", font=("Comic Sans MS", 14), width= 15, height=1, bg="#87CEEB")
-        Label_nombreProducto.grid(row=1, column=1, padx=10, pady=10)
+        Label_nombreProducto = Label(self.miMarco, text="Nombre Producto", fg='#FDFEFE',  font=("Comic Sans MS", 14), 
+        width= 15, height=1, bg='#34495E', borderwidth=3, relief="sunken" )
+        Label_nombreProducto.grid(row=1, column=0, padx=1, pady=10, sticky=E)
+
+         
 
     def crearTabla(self):
     
