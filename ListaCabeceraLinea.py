@@ -1,26 +1,24 @@
 class ListaCabeceraLinea:
     
     def __init__(self):
-        self.head = None
+        self.primero = None
         
     def vacia(self):
-        return self.head == None # retorno True o False
+        return self.primero == None # retorno True o False
 
     def insertar(self, nodoNuevo): # se recive un NodoCabeceraLinea
         
         if self.vacia():
-            self.head = nodoNuevo # se ingresa un NodoCabeceraLinea
+            self.primero = nodoNuevo # se ingresa un NodoCabeceraLinea
 
-        else: 
-            if nodoNuevo.getX() < self.primero.getX():
-                self.agregar_inicio(nodoNuevo)
-            
-
-            elif nodoNuevo.getX() > self.ultimo.getX():
-                self.agregar_final(nodoNuevo)
-            
-            else:
-                self.insertar_medio(nodoNuevo)
+        else:
+            if nodoNuevo.getNumeroLinea() > self.primero.getNumeroLinea():
+                
+                current = self.primero # la cabecera es mi nodo actual
+                while current.next != None:
+                    current = current.next
+                current.next = nodoNuevo
+                #self.agregar_final(nodoNuevo)
     
     def insertar_medio(self, nodoNuevo):
         tmp1 = self.primero
@@ -47,24 +45,24 @@ class ListaCabeceraLinea:
         self.ultimo = nodoNuevo
        
 
-    def recorrer_inicio(self):
+    def recorrer(self):
         
         if self.vacia() is not None:
             
             tmp = self.primero
 
             while tmp != None: # mientras que aux != None (mientras que el nodo no este vacio)
-                print("x: ", tmp.getX())
-                tmp = tmp.getSiguiente()
+                print("Num Linea: ", tmp.getNumeroLinea())
+                tmp = tmp.getNext()
 
-    def buscar(self, x):
+    def buscar(self, num_linea):
         if self.vacia() is not None:
             
             temp = self.primero
             while (temp != None):
-                if temp.getX() == x:
+                if temp.getNumeroLinea() == num_linea:
                     return temp
                 
-                temp = temp.getSiguiente()
+                temp = temp.getNext()
         else:
             return None

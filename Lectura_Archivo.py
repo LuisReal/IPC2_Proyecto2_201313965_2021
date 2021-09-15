@@ -1,8 +1,9 @@
 import xml.etree.ElementTree as ET
 from ListaLineaProduccion import linked_list, NodoLinea
+from ListadoLineas import Matriz
 
 
-class CargaArchivo:
+class Lectura_Archivo:
     def __init__(self):
         
         self.cant_componentes = 0
@@ -30,7 +31,7 @@ class CargaArchivo:
 
         print("Lograste acceder")
 
-        self.lista = linked_list()
+        self.lista = Matriz()
 
         for elemento in root.findall('./ListadoLineasProduccion/LineaProduccion'): # terreno es el nombre de la etiqueta del archivo robot.xml
             
@@ -46,11 +47,9 @@ class CargaArchivo:
 
             
             
-            self.lista.insertar(NodoLinea(self.num_linea_ensamblaje, self.cant_componentes, self.tiempo_ensamblaje))
+            self.lista.insertar(self.num_linea_ensamblaje, self.cant_componentes, self.tiempo_ensamblaje)
         
-        self.lista.imprimir()
-        self.lista.eliminar(1) # se elimina por numero de linea de ensamblaje
-        self.lista.imprimir()
+        
         #lista.eliminar(2)
         #print()
         

@@ -5,8 +5,7 @@ class NodoCabeceraLinea:
     def __init__(self, numero_linea):
         
         self.numero_linea = numero_linea 
-        self.next = None
-        
+        self.next = None   
         self.lista_linea = linked_list()
 
     def getNumeroLinea(self):

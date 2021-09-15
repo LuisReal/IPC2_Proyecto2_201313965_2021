@@ -4,7 +4,8 @@ from tkinter import ttk
 from PyQt5.QtCore import center 
 from PyQt5.QtWidgets import *
 from tkinter import messagebox, filedialog
-from Lectura_Archivo import CargaArchivo
+from Lectura_Archivo import Lectura_Archivo
+from ListadoLineas import Matriz
 
 class Interfaz(QMainWindow):
 
@@ -32,7 +33,7 @@ class Interfaz(QMainWindow):
             
             archivo_maquina = filedialog.askopenfile(title="Cargar Archivo Maquina") # se obtiene la ruta
     
-            carga1 = CargaArchivo()
+            carga1 = Lectura_Archivo()
             carga1.configurarMaquina(archivo_maquina, "2", "Producto2")
 
             messagebox.showinfo("Message", "SE CARGO EL ARCHIVO MAQUINA")
@@ -50,7 +51,7 @@ class Interfaz(QMainWindow):
             
             archivo_simulacion = filedialog.askopenfile(title="Cargar Archivo Simulacion")
         
-            carga2 = CargaArchivo()
+            carga2 = Lectura_Archivo()
             carga2.cargaSimulacion(archivo_simulacion)
 
             messagebox.showinfo("Message", "SE CARGO EL ARCHIVO SIMULACION")
