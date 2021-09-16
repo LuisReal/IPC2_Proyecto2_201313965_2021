@@ -20,3 +20,4 @@ class Matriz:
         tempC.lista_linea.insertar(nodoNuevo) 
         
         print("se inserto numLineas:", num_linea," componentes:", componentes, " tiempo:", tiempo)
+

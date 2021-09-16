@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 from ListaLineaProduccion import linked_list, NodoLinea
 from ListadoLineas import Matriz
+from ListadoProductos import ListaProductos, NodoProducto
 
 
 class Lectura_Archivo:
@@ -13,18 +14,19 @@ class Lectura_Archivo:
         self.nombre_producto = ""
         self.elaboracion = ""
         self.producto_simulado = ""
-        self.menuProductos = []
-        self.nombre_menu_producto = ""
+        #self.menuProductos = []
+        self.busca_producto = ""
         self.lista_ensamblaje = ""
+        self.lista_productos = ""
 
         self.lista = ""
         
    
-    def configurarMaquina(self, archivo, numeroLinea, nombreproducto):
+    def configurarMaquina(self, archivo, numeroLinea, buscaproducto):
     
         xmlfile = archivo
         self.numero_Linea = int(numeroLinea)
-        self.nombre_producto = nombreproducto
+        self.busca_producto = buscaproducto
 
         doc = ET.parse(xmlfile)
         root = doc.getroot()
@@ -48,25 +50,29 @@ class Lectura_Archivo:
             
             
             self.lista.insertar(self.num_linea_ensamblaje, self.cant_componentes, self.tiempo_ensamblaje)
-        
+
+        print("El numero de componentes es: ", self.lista.lineas.buscar(1).lista_linea.primero.getComponentes())
+        print("El tiempo de ensamblaje es: ", self.lista.lineas.buscar(1).lista_linea.primero.getTiempo())
+
         
         #lista.eliminar(2)
         #print()
         
         #lista.imprimir()
 
-            
+        self.lista_productos = ListaProductos()
+
         for elemento in root.findall('./ListadoProductos/Producto'): # terreno es el nombre de la etiqueta del archivo robot.xml
             
             
-            if elemento.find('./nombre').text == self.nombre_producto: # se compara el nombre del terreno que se ingresa con el del archivo xml
-                self.nombre_menu_producto = elemento.find('./nombre').text
-                #print('\n El nombre del producto es ', self.nombre_menu_producto)
+            if elemento.find('./nombre').text == self.busca_producto: # se compara el nombre del terreno que se ingresa con el del archivo xml
+                self.nombre_producto = elemento.find('./nombre').text
+                #print('\n El nombre del producto es ', self.nombre_producto)
                 self.elaboracion = elemento.find('./elaboracion').text
                 #print('\n La elaboracion es ', self.elaboracion)
         
-            self.menuProductos.append(elemento.find('./nombre').text)
-            
+                self.lista_productos.insertar(NodoProducto(self.nombre_producto, self.elaboracion))
+        self.lista_productos.imprimir()
 
     def cargaSimulacion(self, archivo):
         

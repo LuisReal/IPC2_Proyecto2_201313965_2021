@@ -39,20 +39,20 @@ class NodoLinea:
 
 class linked_list:
   def __init__(self):
-    self.head = None
+    self.primero = None
   
   def insertar(self, nodo_nuevo): # recibe un NodoLinea con los valoes = numero, componentes, tiempo
-    if not self.head:  # si no existe cabecera
-      self.head = nodo_nuevo # contiene numero de linea, componentes, tiempo
+    if not self.primero:  # si no existe cabecera
+      self.primero = nodo_nuevo # contiene numero de linea, componentes, tiempo
       
     else:
-      current = self.head 
+      current = self.primero 
       while current.next != None: #la primera vez que se llama a insertar() no pasa por este while solo por el if not self.head
         current = current.next
       current.next = nodo_nuevo 
   
   def imprimir(self):
-    node = self.head
+    node = self.primero
 
     while node != None:
       print("(Num:",node.getNumeroLinea()," Comp:", node.getComponentes(),
@@ -74,7 +74,7 @@ class linked_list:
   '''
 
   def eliminar(self, numero_linea): # elimina el numero de linea de ensamblaje
-    current = self.head
+    current = self.primero
     previous = None
 
     while current and current.getNumeroLinea() != numero_linea:
@@ -82,7 +82,7 @@ class linked_list:
       current = current.next
 
     if previous is None:
-      self.head = current.next
+      self.primero = current.next
     elif current:
       previous.next = current.next
       current.next = None

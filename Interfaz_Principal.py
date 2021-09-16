@@ -34,15 +34,16 @@ class Interfaz(QMainWindow):
             archivo_maquina = filedialog.askopenfile(title="Cargar Archivo Maquina") # se obtiene la ruta
     
             carga1 = Lectura_Archivo()
-            carga1.configurarMaquina(archivo_maquina, "2", "Producto2")
+            carga1.configurarMaquina(archivo_maquina, "2", "Smartwatch")
 
             messagebox.showinfo("Message", "SE CARGO EL ARCHIVO MAQUINA")
 
             
-            Productos = carga1.menuProductos
+            Productos = carga1.menuProductos # revisar------------------:) (RECIVE UNA LISTA DE PRODUCTOS [])
 
             self.producto_seleccionado = StringVar()
             self.producto_seleccionado.set('Nombre Producto')
+            
             menuProducto = OptionMenu(self.miMarco, self.producto_seleccionado, *Productos, command=self.productoSeleccionado  )
             menuProducto.grid(row=1, column=1, padx=10, pady=10)
             menuProducto.config(width =15,  font=("Comic Sans MS", 12), bg="#7FFFD4", bd=3)  
