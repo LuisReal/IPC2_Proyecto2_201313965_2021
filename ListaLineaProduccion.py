@@ -1,15 +1,16 @@
-'''
-class LineaEnsamblaje:
-    def __init__(self, numero, componentes, tiempo):
-        self.numero = numero
-        self.componentes = componentes
-        self.tiempo = tiempo
-'''
+
+
+from ListaComponentes import NodoComponente, ListaComponentes
+
+
 class NodoLinea:
     def __init__(self, numero_linea, componentes, tiempo):   
         self.numero_linea = numero_linea
         self.componentes = componentes
         self.tiempo = tiempo
+        self.lista_componentes = ListaComponentes()
+        self.nada = "No hace nada"
+        self.ensamblar_componente = None    # recibe un nodo
         self.next = None
 
     def setNumeroLinea(self, numero_linea):
@@ -18,8 +19,13 @@ class NodoLinea:
     def getNumeroLinea(self):
       return self.numero_linea
 
-    def setComponentes(self, componentes):
-      self.componentes = componentes
+    '''
+    def setComponentes(self):
+      
+      for c in range(self.componentes):
+        self.lista_componentes.insertar(NodoComponente(c+1))    # se crea la lista de componentes
+      print(self.lista_componentes.imprimir())
+    '''
 
     def getComponentes(self):
       return self.componentes
@@ -36,8 +42,19 @@ class NodoLinea:
     def getNext(self):
       return self.next
 
+    def setNada(self, nada):
+      self.nada = nada
 
-class linked_list:
+    def getNada(self):
+      return self.nada # devuelve un String "No hace nada"
+
+    def setEnsamblarComponente(self, componente): # recibe el componente a ensamblar
+      self.ensamblar_componente = componente
+
+    def getEnsamblarComponente(self):
+      return print("Ensamblar ",self.ensamblar_componente)
+
+class ListaLineaProduccion:
   def __init__(self):
     self.primero = None
   
@@ -59,19 +76,7 @@ class linked_list:
       " Tiem:", node.getTiempo(),")", end = " => ")
       node = node.next
     print()
-  
-  '''
-    node = self.head
 
-    while node != None:
-      print(node.LineaEnsamblaje.componentes, end = "=>")
-      node = node.next
-    
-    node = self.head
-    while node != None:
-      print(node.LineaEnsamblaje.tiempo, end = "=>")
-      node = node.next
-  '''
 
   def eliminar(self, numero_linea): # elimina el numero de linea de ensamblaje
     current = self.primero

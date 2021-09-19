@@ -1,11 +1,11 @@
-import sys
+
 from tkinter import *
 from tkinter import ttk
 from PyQt5.QtCore import center 
 from PyQt5.QtWidgets import *
 from tkinter import messagebox, filedialog
 from Lectura_Archivo import Lectura_Archivo
-from ListadoLineas import Matriz
+
 
 class Interfaz(QMainWindow):
 

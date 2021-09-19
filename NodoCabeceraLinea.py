@@ -1,4 +1,4 @@
-from ListaLineaProduccion import linked_list
+from ListaLineaProduccion import ListaLineaProduccion
 
 class NodoCabeceraLinea:
 
@@ -6,7 +6,7 @@ class NodoCabeceraLinea:
         
         self.numero_linea = numero_linea 
         self.next = None   
-        self.lista_linea = linked_list()
+        self.lista_linea_produccion = ListaLineaProduccion()
 
     def getNumeroLinea(self):
         return self.numero_linea

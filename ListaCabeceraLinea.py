@@ -19,7 +19,7 @@ class ListaCabeceraLinea:
                     current = current.next
                 current.next = nodoNuevo
                 #self.agregar_final(nodoNuevo)
-    
+    '''
     def insertar_medio(self, nodoNuevo):
         tmp1 = self.primero
         while tmp1.getX() < nodoNuevo.getX():
@@ -44,7 +44,7 @@ class ListaCabeceraLinea:
         nodoNuevo.setAnterior(self.ultimo)
         self.ultimo = nodoNuevo
        
-
+    '''
     def recorrer(self):
         
         if self.vacia() is not None:

@@ -8,8 +8,18 @@
 			</LineaProduccion> 
 			<LineaProduccion> 
 				<Numero>2</Numero> 
-				<CantidadComponentes>4</CantidadComponentes> 
+				<CantidadComponentes>6</CantidadComponentes> 
 				<TiempoEnsamblaje>1</TiempoEnsamblaje> 
+			</LineaProduccion>
+			<LineaProduccion> 
+				<Numero>3</Numero> 
+				<CantidadComponentes>5</CantidadComponentes> 
+				<TiempoEnsamblaje>1</TiempoEnsamblaje> 
+			</LineaProduccion>
+			<LineaProduccion> 
+				<Numero>4</Numero> 
+				<CantidadComponentes>10</CantidadComponentes> 
+				<TiempoEnsamblaje>2</TiempoEnsamblaje> 
 			</LineaProduccion>
 		</ListadoLineasProduccion> 
 		<ListadoProductos> 
