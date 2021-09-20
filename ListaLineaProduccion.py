@@ -57,6 +57,9 @@ class NodoLinea:
 class ListaLineaProduccion:
   def __init__(self):
     self.primero = None
+
+  def vacia(self):
+        return self.primero == None # retorno True o False
   
   def insertar(self, nodo_nuevo): # recibe un NodoLinea con los valoes = numero, componentes, tiempo
     if not self.primero:  # si no existe cabecera
@@ -77,6 +80,17 @@ class ListaLineaProduccion:
       node = node.next
     print()
 
+  def buscar(self, num_linea):
+    if self.vacia() is not None:
+            
+      temp = self.primero
+      while (temp != None):
+        if temp.getNumeroLinea() == num_linea:
+          return temp
+                
+        temp = temp.getNext()
+    else:
+      return None
 
   def eliminar(self, numero_linea): # elimina el numero de linea de ensamblaje
     current = self.primero

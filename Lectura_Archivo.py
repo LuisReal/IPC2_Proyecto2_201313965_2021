@@ -1,9 +1,10 @@
 
 import xml.etree.ElementTree as ET
-
+from ListadoProductos import ListadoProductos
 from ListadoLineas import ListadoLineas
-from ListaProductos import ListaProductos, NodoProducto
 from ListaComponentes import NodoComponente, ListaComponentes
+from ListaLineaProduccion import NodoLinea
+
 
 class Lectura_Archivo:
     def __init__(self):
@@ -15,86 +16,105 @@ class Lectura_Archivo:
         self.nombre_producto = ""
         self.elaboracion = ""
         self.producto_simulado = ""
-        self.menuProductos = []
+        self.menuProductos = []  # se utiliza para el OptionMenu
         self.busca_producto = ""
         self.lista_ensamblaje = ""
-        self.lista_productos = ""
+        self.listado_productos = ""
         
+        self.obj_ensamblar = ""
 
         self.lista = ""
         
-   
+        self.archivo_maquina = ""
+        self.root_machine = ""
+        self.doc = ""
+
+        self.archivo_simulacion = ""
+        self.root_simulacion = ""
+
+        self.roots = ""
+
     def configurarMaquina(self, archivo, numeroLinea, buscaproducto):
     
-        xmlfile = archivo
+        archivo_maquina = archivo
         self.numero_Linea = int(numeroLinea)
         self.busca_producto = buscaproducto
 
-        doc = ET.parse(xmlfile)
-        root = doc.getroot()
+        
+        doc = ET.parse(archivo_maquina)
+        self.root_machine = doc.getroot()
 
-        print("Lograste acceder")
 
         self.listado_lineas = ListadoLineas()
-
-        for elemento in root.findall('./ListadoLineasProduccion/LineaProduccion'): 
-            
-            #if int(elemento.find('./Numero').text) == self.numero_Linea: 
-            self.num_linea_ensamblaje = int(elemento.find('./Numero').text)
-            #print('\n El numero de linea ensamblaje es ', self.num_linea_ensamblaje)
-
-            self.cant_componentes = int(elemento.find('./CantidadComponentes').text)
-            #print('\n La cantidad de componentes es ', self.cant_componentes)
-
-            self.tiempo_ensamblaje = int(elemento.find('./TiempoEnsamblaje').text) 
-            #print('\n el tiempo de ensamblaje es ', self.tiempo_ensamblaje)
-
-            
-            
-            self.listado_lineas.insertar(self.num_linea_ensamblaje, self.cant_componentes, self.tiempo_ensamblaje)
-            
-            for c in range(self.cant_componentes): # cantidad de componentes = 4 para cada linea
-                self.listado_lineas.lineas.buscar(self.num_linea_ensamblaje).lista_linea_produccion.primero.lista_componentes.insertar(NodoComponente(c+1))
-            
+        self.listado_productos = ListadoProductos()
         
-        print("El numero de componentes es: ", self.listado_lineas.lineas.buscar(2).lista_linea_produccion.primero.getComponentes()) # se obtiene el num componentes ingresados
-        print("El tiempo de ensamblaje es: ", self.listado_lineas.lineas.buscar(2).lista_linea_produccion.primero.getTiempo()) # se obtiene el tiempo ingresado
-        print("Numero Linea: ",self.listado_lineas.lineas.buscar(4).getNumeroLinea(),
-        "El Componente BUSCADO es: ",self.listado_lineas.lineas.buscar(4).lista_linea_produccion.primero.lista_componentes.buscar(8).getNumComponente())
-
-
-        self.lista_productos = ListaProductos()
-        
-
-        for elemento in root.findall('./ListadoProductos/Producto'):
-                      
-            #if elemento.find('./nombre').text == self.busca_producto:
+        for elemento in self.root_machine.findall('./ListadoProductos/Producto'):
+            
             self.nombre_producto = elemento.find('./nombre').text
-            print("el nombre del producto:", self.nombre_producto)
+            
             self.elaboracion = elemento.find('./elaboracion').text
-            print("La elaboracion:", self.elaboracion)
-            
-            self.lista_productos.insertar(NodoProducto(self.nombre_producto, self.elaboracion))
-            self.lista_productos.buscarProducto(self.nombre_producto).setElaboracion(self.elaboracion)
-                
 
-            self.menuProductos.append(self.lista_productos.buscarProducto(self.nombre_producto).getNombreProducto())
+            self.listado_productos.insertar(self.nombre_producto, self.elaboracion)
             
-        self.lista_productos.imprimir()
+            for elemento in self.root_machine.findall('./ListadoLineasProduccion/LineaProduccion'): 
+            
+            
+                self.num_linea_ensamblaje = int(elemento.find('./Numero').text)
+            
 
+                self.cant_componentes = int(elemento.find('./CantidadComponentes').text)
+            
+
+                self.tiempo_ensamblaje = int(elemento.find('./TiempoEnsamblaje').text)    
+            
+            
+                self.listado_productos.lista_productos.buscarProducto(self.nombre_producto).lista_linea_produccion.insertar(NodoLinea(self.num_linea_ensamblaje, self.cant_componentes, self.tiempo_ensamblaje))
+            
+                for c in range(self.cant_componentes): # cantidad de componentes = 4 para cada linea
+                    #self.listado_lineas.lineas.buscar(self.num_linea_ensamblaje).lista_linea_produccion.primero.lista_componentes.insertar(NodoComponente(c+1))
+                    self.listado_productos.lista_productos.buscarProducto(self.nombre_producto).lista_linea_produccion.buscar(self.num_linea_ensamblaje).lista_componentes.insertar(NodoComponente(c+1))
+            
+            self.menuProductos.append(self.listado_productos.lista_productos.buscarProducto(self.nombre_producto).getNombreProducto())
+
+        
+
+        '''
+        print("El producto: ",self.listado_productos.lista_productos.buscarProducto("USBStick").getNombreProducto(),
+        " De la linea L: ",self.listado_productos.lista_productos.buscarProducto("USBStick").lista_linea_produccion.buscar(4).getNumeroLinea(),
+        " El componente es C: ",self.listado_productos.lista_productos.buscarProducto("USBStick").lista_linea_produccion.buscar(4).lista_componentes.buscar(9).getNumComponente())
+        
+        '''
+        
+    
     def cargaSimulacion(self, archivo):
-        
-        xmlfile = archivo
-        
-
-        doc = ET.parse(xmlfile)
-        root = doc.getroot()
-                
-        for elemento in root.findall('./ListadoProductos/Producto'): # terreno es el nombre de la etiqueta del archivo robot.xml
             
-            self.producto_simulado = elemento.text #Se obtiene el nombre del producto
-            print('\n El nombre del producto es ', self.producto_simulado)
-                
+        doc = ET.parse(archivo)
+        root_simulacion = doc.getroot()
+
+        #print("self.root_simulacion ", self.root_simulacion)
+        #print("self.root_machine ", self.root_machine)
+        
+        for elemento in root_simulacion.findall('./ListadoProductos/Producto'):
+            
+            producto_simular = elemento.text
+          
+            for producto in self.root_machine.findall('./ListadoProductos/Producto'):
+
+                nombre_producto = producto.find('./nombre').text
+
+                if producto_simular == nombre_producto:
+
+                    elaboracion = producto.find('./elaboracion').text
+            
+                    lista_elaboracion = elaboracion.split()            
+
+                    for i in range(len(lista_elaboracion)): # el for empieza desde 0
+                        instruccion = lista_elaboracion[i]
+       
+                        print("El producto: ",self.listado_productos.lista_productos.buscarProducto(nombre_producto).getNombreProducto(),
+                        " De la linea L: ",self.listado_productos.lista_productos.buscarProducto(nombre_producto).lista_linea_produccion.buscar(int(instruccion[1:2])).getNumeroLinea(),
+                        " El componente es C: ",self.listado_productos.lista_productos.buscarProducto(nombre_producto).lista_linea_produccion.buscar(int(instruccion[1:2])).lista_componentes.buscar(int(instruccion[3:4])).getNumComponente())
+         
                 
     
         

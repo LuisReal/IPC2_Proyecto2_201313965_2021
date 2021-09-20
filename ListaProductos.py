@@ -1,13 +1,17 @@
-from IPC2_Proyecto2_201313965.ListaComponenteProductos import NodoComponenteProductos
+from ListaComponenteProductos import ListaComponenteProductos, NodoComponenteProductos
 from ListaLineasProductos import ListaLineasProductos, NodoLineasProductos
-
+from ListaLineaProduccion import ListaLineaProduccion, NodoLinea
+from ListadoLineas import ListadoLineas
 
 class NodoProducto:
     def __init__(self, nombre_producto, elaboracion):   
         self.nombre_producto = nombre_producto
         self.elaboracion = elaboracion
-    
-        self.lista_lineas_productos = ListaLineasProductos() 
+        
+        self.lista_lineas_productos = ListaLineasProductos()
+        self.lista_linea_produccion = ListaLineaProduccion()
+        self.listado_lineas = ListadoLineas()
+
         self.next = None
 
     def setNombreProducto(self, nombre_producto):
@@ -17,23 +21,33 @@ class NodoProducto:
       return self.nombre_producto
 
     
-    def setElaboracion(self, elaboracion):
+    def buscarProductoElaborar(self, elaboracion):
       lista_elaboracion = elaboracion.split()
 
       for i in range(len(lista_elaboracion)): # el for empieza desde 0
         instruccion = lista_elaboracion[i]
-        #---------------PENDIENTE DE REVISAR SIGUIENTE LINEA(ABAJO) QUE NO INSERTE DOS VECES LA MISMA LINEA----
-        self.lista_lineas_productos.insertar(NodoLineasProductos(int(instruccion[1:2])))  
-        #------------------P E N D I E N T E      R E V I S A R   L I N E A   A R R I B A ------------------
+       
+        #if self.lista_lineas_productos.buscarLineaProducto(int(instruccion[1:2])) == None: 
+          #self.lista_lineas_productos.insertar(NodoLineasProductos(int(instruccion[1:2])))
+
+        print("SE BUSCA EL NUMERO DE LINEA A ELABORAR: ",self.lista_linea_produccion.buscar(int(instruccion[1:2])).getNumeroLinea(),
+        "COMPONENTE A ELABORAR: ",self.lista_linea_produccion.buscar(int(instruccion[1:2])).lista_componentes.buscar(int(instruccion[3:4])).getNumComponente())
+
+        #if self.lista_linea_produccion.buscar(int(instruccion[1:2])) == None: 
+          #self.lista_linea_produccion.insertar(NodoLinea(int(instruccion[1:2])))  
+
+      '''
+      for j in range(len(lista_elaboracion)):  
+        instruccion = lista_elaboracion[j]
         if int(instruccion[1:2]) == 1: 
-
+          
           self.lista_lineas_productos.buscarLineaProducto(int(instruccion[1:2])).lista_componente_productos.insertar(NodoComponenteProductos(int(instruccion[3:4]))) 
 
-        elif int(instruccion[1:2]) == 2: 
+        elif int(instruccion[1:2]) == 2:
+          
           self.lista_lineas_productos.buscarLineaProducto(int(instruccion[1:2])).lista_componente_productos.insertar(NodoComponenteProductos(int(instruccion[3:4]))) 
 
-      print("Busqueda de COMPONENTE de Linea a Elaborar",
-      self.lista_lineas_productos.buscarLineaProducto(1).lista_componente_productos.buscarComponente(2).getNumComponente())
+      '''
       
       
     def getElaboracion(self):      
@@ -51,6 +65,8 @@ class ListaProductos:
     self.primero = None
   
   def insertar(self, nodo_nuevo): # recibe un NodoProducto con los valoes = nombre_producto, elaboracion
+    
+    
     if not self.primero:  # si no existe cabecera
       self.primero = nodo_nuevo 
       

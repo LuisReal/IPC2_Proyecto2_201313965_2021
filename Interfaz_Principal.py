@@ -21,25 +21,25 @@ class Interfaz(QMainWindow):
         self.miMarco.config(bg="#F5F5F5")
         self.miMarco.config(width="700", height="500")
         self.opciones = ['Archivo Maquina', 'Archivo Simulacion']
-        
+        self.carga = Lectura_Archivo()
         self.creacionWidgets()
         self.crearTabla()
         raiz.mainloop()
 
+        self.archivo_maquina = ""
+
     def opcionSeleccionada(self, *args):
         
-
         if self.opcion_seleccionada.get() == "Archivo Maquina":
             
-            archivo_maquina = filedialog.askopenfile(title="Cargar Archivo Maquina") # se obtiene la ruta
-    
-            carga1 = Lectura_Archivo()
-            carga1.configurarMaquina(archivo_maquina, "2", "Smartwatch")
+            self.archivo_maquina = filedialog.askopenfile(title="Cargar Archivo Maquina") # se obtiene la ruta   
+            
+            self.carga.configurarMaquina(self.archivo_maquina, "2", "Smartwatch")
 
             messagebox.showinfo("Message", "SE CARGO EL ARCHIVO MAQUINA")
 
             
-            Productos = carga1.menuProductos # revisar------------------:) (RECIVE UNA LISTA DE PRODUCTOS [])
+            Productos = self.carga.menuProductos # revisar------------------:) (RECIVE UNA LISTA DE PRODUCTOS [])
 
             self.producto_seleccionado = StringVar()
             self.producto_seleccionado.set('Nombre Producto')
@@ -50,10 +50,9 @@ class Interfaz(QMainWindow):
             
         elif self.opcion_seleccionada.get() == "Archivo Simulacion":
             
-            archivo_simulacion = filedialog.askopenfile(title="Cargar Archivo Simulacion")
-        
-            carga2 = Lectura_Archivo()
-            carga2.cargaSimulacion(archivo_simulacion)
+            archivo_simulacion = filedialog.askopenfile(title="Cargar Archivo Simulacion")  
+            
+            self.carga.cargaSimulacion(archivo_simulacion)
 
             messagebox.showinfo("Message", "SE CARGO EL ARCHIVO SIMULACION")
 
