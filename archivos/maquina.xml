@@ -9,7 +9,7 @@
 			<LineaProduccion> 
 				<Numero>2</Numero> 
 				<CantidadComponentes>6</CantidadComponentes> 
-				<TiempoEnsamblaje>1</TiempoEnsamblaje> 
+				<TiempoEnsamblaje>5</TiempoEnsamblaje> 
 			</LineaProduccion>
 			<LineaProduccion> 
 				<Numero>3</Numero> 
@@ -19,7 +19,7 @@
 			<LineaProduccion> 
 				<Numero>4</Numero> 
 				<CantidadComponentes>10</CantidadComponentes> 
-				<TiempoEnsamblaje>2</TiempoEnsamblaje> 
+				<TiempoEnsamblaje>1</TiempoEnsamblaje> 
 			</LineaProduccion>
 		</ListadoLineasProduccion> 
 		<ListadoProductos> 

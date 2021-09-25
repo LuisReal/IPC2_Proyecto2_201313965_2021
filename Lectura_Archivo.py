@@ -22,6 +22,7 @@ class Lectura_Archivo:
         self.listado_productos = ""
         
         self.obj_ensamblar = ""
+        self.tiempo_simular = ""
 
         self.lista = ""
         
@@ -86,13 +87,39 @@ class Lectura_Archivo:
         '''
         
     
-    def cargaSimulacion(self, archivo):
+    def cargaSimulacion(self, root_simulacion):
             
-        doc = ET.parse(archivo)
-        root_simulacion = doc.getroot()
+        
 
         #print("self.root_simulacion ", self.root_simulacion)
         #print("self.root_machine ", self.root_machine)
+
+        for elemento in root_simulacion.findall('./ListadoProductos/Producto'): # archivo simulacion_1
+            
+            producto_simular = elemento.text
+            
+            for producto in self.root_machine.findall('./ListadoProductos/Producto'):
+
+                nombre_producto = producto.find('./nombre').text    # archivo maquina
+
+                elaboracion = producto.find('./elaboracion').text
+
+                if producto_simular == nombre_producto:
+
+                    lista_elaboracion = elaboracion.split()  
+                    
+                    for i in range(len(lista_elaboracion)):
+                        instruccion = lista_elaboracion[i]
+
+                        for linea in self.root_machine.findall('./ListadoLineasProduccion/LineaProduccion'): 
+            
+                            if instruccion[1:2] == linea.find('./Numero').text:
+                                
+                                linea_simular = int(linea.find('./Numero').text)
+        
+                                self.tiempo_simular = int(linea.find('./TiempoEnsamblaje').text)
+                                print("tiempo_simular", self.tiempo_simular)
+        '''
         
         for elemento in root_simulacion.findall('./ListadoProductos/Producto'):
             
@@ -114,7 +141,7 @@ class Lectura_Archivo:
                         print("El producto: ",self.listado_productos.lista_productos.buscarProducto(nombre_producto).getNombreProducto(),
                         " De la linea L: ",self.listado_productos.lista_productos.buscarProducto(nombre_producto).lista_linea_produccion.buscar(int(instruccion[1:2])).getNumeroLinea(),
                         " El componente es C: ",self.listado_productos.lista_productos.buscarProducto(nombre_producto).lista_linea_produccion.buscar(int(instruccion[1:2])).lista_componentes.buscar(int(instruccion[3:4])).getNumComponente())
-         
+        '''
                 
     
         
